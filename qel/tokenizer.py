@@ -79,6 +79,46 @@ class AmharicTokenizer:
             sentences.append(current_sentence.strip())
         return sentences
 
+    def matrix_tokenize(self, text: str, clean=False, include_punc=False, compound_words_as_one=False) -> List[List[str]]:
+        """
+        Tokenize text in to list of tokenized sentences.
+        
+        :param text: the text to tokenize
+        :param clean: apply basic cleaning rules to the text
+        :param include_punc: Include punctuations in the word tokens.
+        :param compound_words_as_one: Include compounds words in the word tokens as one word.
+                
+        :return: a list of word-tokenized sentences
+        """
+        if clean:
+            text = apply_rules(text)
+        
+        matrix = []
+        curr_row = []
+        curr_word = ""
+        prev_word = None
+        
+        for char in text:
+            if char not in self.__sentence_delimiters and char not in self.__word_delimiters:
+                curr_word += char
+            elif char in self.__word_delimiters:
+                curr_word = curr_word.strip()
+                if curr_word:
+                    if compound_words_as_one and curr_word in self.__compound_words_fix:
+                        continue
+                    curr_row.append(curr_word)
+                    prev_word = curr_word
+                    if include_punc and char != ' ': tokens.append(char);prev_word = char;
+                    curr_word = ""
+                if char in self.sentence_delimiters:
+                    matrix.append(curr_row)
+                    curr_row = []
+                    
+                    
+        if current_word.strip(): curr_row.append(current_word.strip())
+        if current_row: matrix.append(current_row)
+
+        return matrix
 
     @classmethod
     def __find_indexes(text, punct):
