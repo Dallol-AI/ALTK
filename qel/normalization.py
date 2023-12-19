@@ -6,7 +6,17 @@ Improved its implementation and added more normalization rules.
 import re
 
 class AmharicNormalizer:
-    def __init__(self):
+    def __init__(self, custom_rule: dict=None, merge=True):
+        """
+         Amharic Normalizer
+        
+        :param custom_rule (dict): add custom rules for normalization
+        :param merge (bool): merge custom rules with the default rules if True, else override the default rules
+        """
+        
+        if type(custom_rule) != dict:
+            raise(TypeError("custom_rule must be a dictionary"))
+
         self.__replacements = {
             "ሀ": "ሃ", "ሐ": "ሃ", "ሓ": "ሃ", "ኅ": "ሃ", "ኻ": "ሃ", "ኃ": "ሃ",
             "ዅ": "ሁ", "ሗ": "ኋ", "ኁ": "ሁ", "ኂ": "ሂ", "ኄ": "ሄ", "ዄ": "ሄ", "ኅ": "ህ",
@@ -24,11 +34,16 @@ class AmharicNormalizer:
             "ጡ[ዋአ]": "ጧ", "ጩ[ዋአ]": "ጯ", "ጹ[ዋአ]": "ጿ", "ፉ[ዋአ]": "ፏ",
             "[ቊ]": "ቁ", "[ኵ]": "ኩ", "\s+": " ",
         }
+        
+        if custom_rule:
+            self.__replacements = self.__replacements.merge(custom_rule) if merge else custom_rule
 
     def normalize(self, text: str) -> str:
         """
-        Normalization for Amharic text.
-        Add any specific normalization rules or transformations here.
+        Apply normalization to the given text
+        
+        :param text (str): text to normalize
+        :return: normalized text
         """
         for pattern, replacement in self.__replacements.items():
             text = re.sub(pattern, replacement, text)
