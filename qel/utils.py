@@ -12,8 +12,8 @@ class Rule(object):
 
 # Define rules
 NewLineInMiddleOfWordRule = Rule(r'\n(?=[\u1200-\u1248\u1250-\u1256\u1260-\u1288\u1290-\u12B0\u12C0-\u12C8\u12D0-\u12D6\u12E0-\u12F2\u1300-\u1342\u1350-\u137C]{1,2}\n)', '')
-DoubleNewLineWithSpaceRule = Rule(r'\n \n', "\r")
-DoubleNewLineRule = Rule(r'\n\n', "\r")
+DoubleNewLineWithSpaceRule = Rule(r'\n \n', " ")
+DoubleNewLineRule = Rule(r'\n\n', " ")
 
 # https://rubular.com/r/EjupO3vKTiNkNs
 NewLineFollowedBySentenceEndingRule = Rule(r'\n(?=።(\s|\n))', '') 
