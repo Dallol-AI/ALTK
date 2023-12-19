@@ -70,3 +70,14 @@ def apply_rules(text, rules):
     for rule in rules:
         text = re.sub(rule.pattern, rule.replacement, text)
     return text
+
+
+# file handlers for reading and writing 
+
+def read_file(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return file.read()
+
+def read_file_line(file_path):
+    with open(file_path, 'r', encoding='utf-8') as file:
+        return file.readlines()
