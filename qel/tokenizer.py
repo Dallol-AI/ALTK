@@ -7,10 +7,17 @@ from utils import apply_rules, RULES
 class AmharicTokenizer:
     def __init__(self, word_delimiters: set = None, sentence_delimiters: set = None):
         """
+        :param word_delimiters (optional): word delimiters to use for tokenization (default: whitespace + punctuations)
+        :param sentence_delimiters (optional): sentence delimiters to use for tokenization (default: "።", "፥", "፨", "::", "፡፡", "?", "!",'፧')
+        :param include_punc: Include punctuations in the word tokens.
+        :param compound_words_as_one: Include compounds words in the word tokens as one word.
+                
+        :return: a list of word-tokenized sentences
+        
         Amharic Tokenizer for tokenization and sentence segmentation.
 
         Args:
-        - sentence_punctuations (Set[str]): List of sentence-ending punctuations.
+        -  (Set[str]): List of sentence-ending punctuations.
         - word_punctuations (Set[str]): List of word-ending punctuations.
         """
         self.__word_delimiters = word_delimiters or { "[", " ", "፣", "።", ",", "፦", "!", ">", "&", "፧", "}", "^", ")", "፨", "<", "~", "]", "*", "{", "፤", "/", "፥", "(", "\\", "_", "+", ";", "#", "\"", ":", "=", " ", "%", "|", "`", "@", "'", "?", "$", }
@@ -119,10 +126,3 @@ class AmharicTokenizer:
         if current_row: matrix.append(current_row)
 
         return matrix
-
-    @classmethod
-    def __find_indexes(text, punct):
-        """
-        returns the index of the sentence delimiters in the text
-        """
-        return [i + len(punct) - 1 for i in range(len(text)) if text.startswith(punct, i)]
