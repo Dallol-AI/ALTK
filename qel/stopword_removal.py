@@ -2,12 +2,12 @@ from utils import read_file_line
 
 # Stopwords Remover using custom stopword
 
-def remove_stopwords(tokens: list, custom_stopwords: list =None):
+def remove_stopwords(tokens: list, custom_stopwords: set =None):
     """
     Removes stopwords from tokens.
 
     :params tokens (list): The list of words from which stopwords should be removed.
-    :params custom_stopwords (list, optional): The list of custom stopwords. Defaults to None which uses default stopwords list.
+    :params custom_stopwords (set, optional): The list of custom stopwords. Defaults to None which uses default stopwords list.
 
     :returns: The list of tokens with stopwords removed.
     """
